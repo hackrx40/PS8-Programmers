@@ -27,6 +27,8 @@ def capture_screenshot(url, output_path):
         # Close the browser
         driver.quit()
 
+
+
 def compare_images(image1_path, image2_path):
     # Read the images from file
     image1 = cv2.imread(image1_path)
