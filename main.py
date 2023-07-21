@@ -463,3 +463,15 @@ def process_data(request):
     else:
         return JsonResponse({'error': 'Only POST method is supported'})
 
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('process/', views.process_data, name='process_data'),
+]
+
+INSTALLED_APPS = [
+    # ... other apps ...
+    'my_app',
+]
