@@ -1,3 +1,26 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import cv2
@@ -181,3 +204,5 @@ cv2.destroyAllWindows()
 # Example usage
 image_path = 'path_to_your_image.jpg'
 extracted_features = extract_features(image_path, base_model)
+
+
