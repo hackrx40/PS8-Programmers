@@ -310,3 +310,13 @@ def get_item_by_id(item_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+import requests
+
+# Get all items
+response = requests.get('http://localhost:5000/items')
+print(response.json())
+
+# Get an item by ID
+response = requests.get('http://localhost:5000/items/2')
+print(response.json())
