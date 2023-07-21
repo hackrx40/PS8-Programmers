@@ -252,4 +252,15 @@ class TestAddition(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
+def add_numbers(a, b):
+    return a + b
+
+def test_addition_positive_numbers():
+    result = add_numbers(2, 3)
+    assert result == 5
+
+def test_addition_negative_numbers():
+    result = add_numbers(-2, -3)
+    assert result == -5
+
 
