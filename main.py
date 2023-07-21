@@ -444,3 +444,22 @@ if __name__ == "__main__":
         print(layout_data)
 
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt  # Disable CSRF protection for simplicity (not recommended for production)
+def process_data(request):
+    if request.method == 'POST':
+        data = request.POST.get('data', None)
+        if data:
+            # Call your software's processing function and get the result
+            # Replace the following line with the actual processing logic of your software
+            processed_data = your_software_process_function(data)
+
+            # Return the processed data as a JSON response
+            return JsonResponse({'result': processed_data})
+        else:
+            return JsonResponse({'error': 'Invalid data'})
+    else:
+        return JsonResponse({'error': 'Only POST method is supported'})
+
