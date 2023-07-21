@@ -475,3 +475,36 @@ INSTALLED_APPS = [
     # ... other apps ...
     'my_app',
 ]
+
+
+
+# my_app/utils.py
+def process_data(input_data):
+    # Your software's processing logic goes here
+    # Replace the following line with your actual processing code
+    return f"Processed: {input_data}"
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .utils import process_data
+
+@csrf_exempt  # Disable CSRF protection for simplicity (not recommended for production)
+def process_data_api(request):
+    if request.method == 'POST':
+        data = request.POST.get('data', None)
+        if data:
+            processed_result = process_data(data)
+            return JsonResponse({'result': processed_result})
+        else:
+            return JsonResponse({'error': 'Invalid data'})
+    else:
+        return JsonResponse({'error': 'Only POST method is supported'})
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('api/process/', views.process_data_api, name='process_data_api'),
+]
+INSTALLED_APPS = [
+    # ... other apps ...
+    'my_app',
+]
