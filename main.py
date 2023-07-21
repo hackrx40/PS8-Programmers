@@ -156,6 +156,28 @@ def extract_features(image_path, model):
     return features.flatten()
 
 
+import cv2
+import numpy as np
+
+# Load the image in grayscale mode
+image_path = 'path_to_your_image.jpg'
+image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+
+# Set a threshold value (adjust this value based on your image)
+threshold_value = 128
+
+# Threshold the image (pixels with intensity >= threshold_value will be set to 255, others to 0)
+_, binary_image = cv2.threshold(image, threshold_value, 255, cv2.THRESH_BINARY)
+
+# Display the original and binary images using OpenCV
+cv2.imshow('Original Image', image)
+cv2.imshow('Binary Image', binary_image)
+
+# Wait for a key press and then close the windows
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
 # Example usage
 image_path = 'path_to_your_image.jpg'
 extracted_features = extract_features(image_path, base_model)
