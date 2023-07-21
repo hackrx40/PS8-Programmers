@@ -121,3 +121,14 @@ if __name__ == "__main__":
     # (depends on the specific data structure returned by the Figma API)
     # Extract position, size, and other layout details of design elements
 
+import cv2
+import numpy as np
+image_path = 'path_to_your_image.jpg'
+image = cv2.imread(image_path)
+vk_size = (5, 5)  # Set the kernel size for blurring
+image_blurred = cv2.GaussianBlur(image, k_size, 0)
+image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+alpha = 1.5  # Increase or decrease for different levels of contrast
+enhanced_image = cv2.convertScaleAbs(image, alpha=alpha, beta=0)
+beta = 50  # Increase or decrease for different levels of brightness
+enhanced_image = cv2.convertScaleAbs(image, alpha=1.0, beta=beta)
