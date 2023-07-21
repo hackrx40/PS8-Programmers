@@ -374,3 +374,39 @@ if __name__ == "__main__":
         print("Layout extraction failed.")
 
 
+import requests
+from bs4 import BeautifulSoup
+
+def extract_layout(url):
+    try:
+        # Fetch the website's HTML content
+        response = requests.get(url)
+        response.raise_for_status()
+        html_content = response.text
+
+        # Parse the HTML using BeautifulSoup
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        # Initialize layout dictionary to store tag counts
+        layout = {}
+
+        # Extract layout by counting tags
+        for element in soup.find_all(True):
+            tag = element.name
+            layout[tag] = layout.get(tag, 0) + 1
+
+        return layout
+
+    except requests.exceptions.RequestException as e:
+        print("Error fetching the website:", e)
+        return None
+
+if __name__ == "__main__":
+    website_url = "https://example.com"  # Replace with the URL of the website you want to analyze
+    layout = extract_layout(website_url)
+    if layout:
+        print("Website Layout:")
+        for tag, count in layout.items():
+            print(f"{tag}: {count}")
+    else:
+        print("Layout extraction failed.")
