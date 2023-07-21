@@ -91,3 +91,33 @@ if __name__ == "__main__":
 
     # Extract layout information from the screenshot
     extract_layout_from_screenshot(screenshot_path)
+
+
+import requests
+
+def get_figma_file(figma_file_id, access_token):
+    headers = {
+        "X-Figma-Token": access_token
+    }
+    url = f"https://api.figma.com/v1/files/{figma_file_id}"
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        figma_data = response.json()
+        return figma_data
+    else:
+        print("Error:", response.status_code)
+        return None
+
+if __name__ == "__main__":
+    # Figma file ID and access token
+    figma_file_id = "your_figma_file_id"
+    access_token = "your_figma_access_token"
+
+    # Get the Figma file data
+    figma_data = get_figma_file(figma_file_id, access_token)
+
+    # Process the Figma data to gather layout information
+    # (depends on the specific data structure returned by the Figma API)
+    # Extract position, size, and other layout details of design elements
+
