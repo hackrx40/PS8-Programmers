@@ -320,3 +320,57 @@ print(response.json())
 # Get an item by ID
 response = requests.get('http://localhost:5000/items/2')
 print(response.json())
+
+
+import requests
+from bs4 import BeautifulSoup
+from pyquery import PyQuery as pq
+
+def extract_layout(url):
+    try:
+        # Fetch the website's HTML content
+        response = requests.get(url)
+        response.raise_for_status()
+        html_content = response.text
+
+        # Parse the HTML using BeautifulSoup
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        # Get all elements with their tags and attributes
+        layout = {}
+        for element in soup.find_all(True):
+            tag = element.name
+            attributes = element.attrs
+            layout[tag] = layout.get(tag, 0) + 1
+
+        # Parse CSS styles using pyquery
+        css_styles = pq(html_content)
+        layout_styles = {}
+        for style_element in css_styles('style').items():
+            styles = style_element.text().split('\n')
+            for style in styles:
+                if '{' in style and '}' in style:
+                    selector, properties = style.split('{')
+                    selector = selector.strip()
+                    properties = properties.split('}')[0].strip()
+                    layout_styles[selector] = properties
+
+        return layout, layout_styles
+
+    except requests.exceptions.RequestException as e:
+        print("Error fetching the website:", e)
+        return None, None
+
+if __name__ == "__main__":
+    website_url = "https://example.com"  # Replace with the URL of the website you want to analyze
+    layout, layout_styles = extract_layout(website_url)
+    if layout and layout_styles:
+        print("Website Layout:")
+        print(layout)
+        print("\nCSS Styles:")
+        for selector, properties in layout_styles.items():
+            print(f"{selector}: {properties}")
+    else:
+        print("Layout extraction failed.")
+
+
