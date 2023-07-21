@@ -62,3 +62,32 @@ if __name__ == "__main__":
 
     # Perform visual testing by comparing the screenshots
     compare_images(reference_screenshot, screenshot_output)
+
+
+import cv2
+
+def extract_layout_from_screenshot(image_path):
+    # Read the screenshot
+    screenshot = cv2.imread(image_path)
+
+    # Convert the screenshot to grayscale
+    gray_screenshot = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+
+    # Apply edge detection or other preprocessing as needed
+    edges = cv2.Canny(gray_screenshot, 50, 150)
+
+    # Find contours in the image
+    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Process the contours and gather layout information
+    for contour in contours:
+        x, y, w, h = cv2.boundingRect(contour)
+        print("Element position (x, y):", x, y)
+        print("Element size (width, height):", w, h)
+
+if __name__ == "__main__":
+    # Path to the screenshot image
+    screenshot_path = "path/to/screenshot.png"
+
+    # Extract layout information from the screenshot
+    extract_layout_from_screenshot(screenshot_path)
