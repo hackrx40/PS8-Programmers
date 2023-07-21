@@ -205,4 +205,31 @@ cv2.destroyAllWindows()
 image_path = 'path_to_your_image.jpg'
 extracted_features = extract_features(image_path, base_model)
 
+import tkinter as tk
+from tkinter import messagebox
 
+def submit_url():
+    url = url_entry.get()
+    if url:
+        # You can perform any additional validation here if needed
+        messagebox.showinfo("Success", f"URL '{url}' added successfully!")
+        url_entry.delete(0, tk.END)
+    else:
+        messagebox.showwarning("Error", "Please enter a valid URL!")
+
+# Create the main window
+root = tk.Tk()
+root.title("Website URL Input")
+
+# Create the URL input field
+url_label = tk.Label(root, text="Enter Website URL:")
+url_label.pack(pady=10)
+url_entry = tk.Entry(root, width=50)
+url_entry.pack(pady=5)
+
+# Create the Submit button
+submit_button = tk.Button(root, text="Submit", command=submit_url)
+submit_button.pack(pady=10)
+
+# Start the main event loop
+root.mainloop()
