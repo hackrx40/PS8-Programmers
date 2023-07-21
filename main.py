@@ -279,3 +279,34 @@ cv2.imshow('Edges', edges)
 # Wait for a key press and then close the windows
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+# Sample data
+sample_data = {
+    "items": [
+        {"id": 1, "name": "Item 1", "price": 10.99},
+        {"id": 2, "name": "Item 2", "price": 15.99},
+        {"id": 3, "name": "Item 3", "price": 20.50}
+    ]
+}
+
+# Endpoint to get all items
+@app.route('/items', methods=['GET'])
+def get_all_items():
+    return jsonify(sample_data)
+
+# Endpoint to get an item by ID
+@app.route('/items/<int:item_id>', methods=['GET'])
+def get_item_by_id(item_id):
+    item = next((item for item in sample_data["items"] if item["id"] == item_id), None)
+    if item:
+        return jsonify(item)
+    else:
+        return jsonify({"message": "Item not found"}), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
