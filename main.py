@@ -132,3 +132,28 @@ alpha = 1.5  # Increase or decrease for different levels of contrast
 enhanced_image = cv2.convertScaleAbs(image, alpha=alpha, beta=0)
 beta = 50  # Increase or decrease for different levels of brightness
 enhanced_image = cv2.convertScaleAbs(image, alpha=1.0, beta=beta)
+
+
+import tensorflow as tf
+from tensorflow.keras.applications import VGG16
+from tensorflow.keras.applications.vgg16 import preprocess_input
+from tensorflow.keras.preprocessing import image
+import numpy as np
+# Load the VGG16 model without the top (fully connected) layers
+base_model = VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+
+# Print the model summary to see the layers
+base_model.summary()
+def extract_features(image_path, model):
+    img = image.load_img(image_path, target_size=(224, 224))
+    img_array = image.img_to_array(img)
+    img_array = np.expand_dims(img_array, axis=0)
+    img_array = preprocess_input(img_array)
+
+    features = model.predict(img_array)
+    return features.flatten()
+
+
+# Example usage
+image_path = 'path_to_your_image.jpg'
+extracted_features = extract_features(image_path, base_model)
