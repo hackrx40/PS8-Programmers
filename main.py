@@ -232,6 +232,7 @@ import unittest
 def add_numbers(a, b):
     return a + b
 
+
 class TestAddition(unittest.TestCase):
 
     def test_addition_positive_numbers(self):
@@ -257,3 +258,25 @@ def test_addition_negative_numbers():
     assert result == -5
 
 
+import cv2
+
+# Load the image
+image_path = 'path_to_your_image.jpg'
+image = cv2.imread(image_path)
+
+# Convert the image to grayscale
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# Apply Gaussian blur to reduce noise
+blurred_image = cv2.GaussianBlur(gray_image, (5, 5), 0)
+
+# Perform edge detection using Canny
+edges = cv2.Canny(blurred_image, 50, 150)
+
+# Display the original image and processed edges
+cv2.imshow('Original Image', image)
+cv2.imshow('Edges', edges)
+
+# Wait for a key press and then close the windows
+cv2.waitKey(0)
+cv2.destroyAllWindows()
